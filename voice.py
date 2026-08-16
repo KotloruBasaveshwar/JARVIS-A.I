@@ -1,47 +1,84 @@
 import pyttsx3
 import speech_recognition as sr
+import threading
+import comtypes
 
 
-# ==========================================
+# ============================================================
 # VOICE OUTPUT
-# ==========================================
+# ============================================================
+
+tts_lock = threading.Lock()
+
 
 def speak(text):
 
-    engine = pyttsx3.init()
-
-    voices = engine.getProperty("voices")
-
-    if voices:
-        engine.setProperty("voice", voices[0].id)
-
-    engine.setProperty("rate", 170)
-    engine.setProperty("volume", 1.0)
-
     print("Jarvis:", text)
 
-    engine.say(text)
-    engine.runAndWait()
-    engine.stop()
+    with tts_lock:
+
+        engine = None
+
+        try:
+
+            comtypes.CoInitialize()
+
+            engine = pyttsx3.init()
+
+            voices = engine.getProperty("voices")
+
+            if voices:
+                engine.setProperty(
+                    "voice",
+                    voices[0].id
+                )
+
+            engine.setProperty(
+                "rate",
+                170
+            )
+
+            engine.setProperty(
+                "volume",
+                1.0
+            )
+
+            engine.say(text)
+            engine.runAndWait()
+
+        except Exception as e:
+
+            print("TTS error:", e)
+
+        finally:
+
+            if engine is not None:
+
+                try:
+                    engine.stop()
+                except Exception:
+                    pass
+
+                del engine
+
+            try:
+                comtypes.CoUninitialize()
+            except Exception:
+                pass
 
 
-# ==========================================
+# ============================================================
 # SPEECH RECOGNITION
-# ==========================================
+# ============================================================
 
 recognizer = sr.Recognizer()
 
-recognizer.pause_threshold = 1.0
-recognizer.non_speaking_duration = 0.4
+recognizer.pause_threshold = 0.6
+recognizer.non_speaking_duration = 0.2
 recognizer.dynamic_energy_threshold = True
 
-LISTEN_TIMEOUT = 5
-PHRASE_TIME_LIMIT = 8
-
-
-# ==========================================
-# LISTEN
-# ==========================================
+LISTEN_TIMEOUT = 3
+PHRASE_TIME_LIMIT = 7
 
 def listen():
 
@@ -64,13 +101,14 @@ def listen():
         command = command.lower().strip()
 
         print("You said:", command)
-        print("DEBUG:", command)
 
         return command
+
 
     except sr.WaitTimeoutError:
 
         return ""
+
 
     except sr.UnknownValueError:
 
@@ -78,15 +116,19 @@ def listen():
 
         return ""
 
+
     except sr.RequestError:
 
-        print("Speech recognition service is unavailable.")
+        print(
+            "Speech recognition service is unavailable."
+        )
 
         speak(
             "Speech recognition is currently unavailable."
         )
 
         return ""
+
 
     except Exception as e:
 
@@ -95,18 +137,18 @@ def listen():
         return ""
 
 
-# ==========================================
+# ============================================================
 # COMPATIBILITY
-# ==========================================
+# ============================================================
 
 def take_command():
 
     return listen()
 
 
-# ==========================================
+# ============================================================
 # WAKE WORD
-# ==========================================
+# ============================================================
 
 def is_wake_word(command):
 
@@ -125,9 +167,9 @@ def is_wake_word(command):
     )
 
 
-# ==========================================
+# ============================================================
 # SLEEP COMMAND
-# ==========================================
+# ============================================================
 
 def is_sleep_command(command):
 
@@ -147,9 +189,9 @@ def is_sleep_command(command):
     )
 
 
-# ==========================================
+# ============================================================
 # STOP COMMAND
-# ==========================================
+# ============================================================
 
 def is_stop_command(command):
 
@@ -165,4 +207,3 @@ def is_stop_command(command):
         word in command
         for word in stop_words
     )
-

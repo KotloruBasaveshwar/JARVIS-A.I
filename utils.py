@@ -33,10 +33,29 @@ def preprocess_command(command):
 
     }
 
+    # Apply normal replacements
     for old, new in replacements.items():
 
         command = command.replace(old, new)
 
+
+    # ==========================================
+    # STOP COMMAND CORRECTIONS
+    # ==========================================
+
+    stop_variations = [
+        "stop jar",
+        "top jar",
+        "top jarvis",
+        "stop jarvis"
+    ]
+
+    if command in stop_variations:
+
+        command = "stop jarvis"
+
+
+    # Clean extra spaces
     command = " ".join(command.split())
 
     return command
