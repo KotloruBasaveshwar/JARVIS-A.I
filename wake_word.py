@@ -1,26 +1,55 @@
-
 import numpy as np
 import pyaudiowpatch as pyaudio
 from openwakeword.model import Model
 
 
+# ==========================================================
+# SETTINGS
+# ==========================================================
+
 RATE = 16000
 CHUNK = 1280
 
-# Start lower for testing.
-# We can increase it later if there are false detections.
-WAKE_THRESHOLD = 0.25
+WAKE_THRESHOLD = 0.22
 
+MODEL_NAME = "hey_jarvis_v0.1"
+
+
+# ==========================================================
+# LOAD MODEL ONLY ONCE
+# ==========================================================
+
+_model = None
+
+
+def get_model():
+
+    global _model
+
+    if _model is None:
+
+        print("Loading wake-word model...")
+
+        _model = Model(
+            wakeword_models=[MODEL_NAME],
+            inference_framework="onnx"
+        )
+
+        print("Wake-word model ready.")
+
+    return _model
+
+
+# ==========================================================
+# WAKE WORD DETECTION
+# ==========================================================
 
 def wait_for_wake_word():
 
     print("Jarvis is running in background.")
     print("Say: Hey Jarvis")
 
-    model = Model(
-        wakeword_models=["hey_jarvis_v0.1"],
-        inference_framework="onnx"
-    )
+    model = get_model()
 
     audio = pyaudio.PyAudio()
 
@@ -46,12 +75,15 @@ def wait_for_wake_word():
                 dtype=np.int16
             )
 
-            predictions = model.predict(audio_frame)
+            predictions = model.predict(
+                audio_frame
+            )
 
             for wake_word, score in predictions.items():
 
-                # Show score so we can diagnose detection.
-                if score > 0.05:
+                # Only show useful scores
+                if score > 0.10:
+
                     print(
                         f"{wake_word}: {score:.3f}"
                     )
@@ -67,16 +99,37 @@ def wait_for_wake_word():
 
     except KeyboardInterrupt:
 
-        print("\nWake-word test stopped.")
+        print(
+            "\nWake-word test stopped."
+        )
 
         return False
 
+
     finally:
 
-        stream.stop_stream()
-        stream.close()
-        audio.terminate()
+        try:
+            stream.stop_stream()
+        except Exception:
+            pass
 
+        try:
+            stream.close()
+        except Exception:
+            pass
+
+        try:
+            audio.terminate()
+        except Exception:
+            pass
+
+        # Give Windows audio device time to release
+        import time
+        time.sleep(0.3)
+
+# ==========================================================
+# TEST
+# ==========================================================
 
 if __name__ == "__main__":
 

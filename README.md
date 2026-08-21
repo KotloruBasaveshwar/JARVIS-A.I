@@ -1,92 +1,186 @@
-# JARVIS A.I. 🤖
+# JARVIS A.I. – Personal Voice Assistant
 
-A Python-based personal AI voice assistant that combines voice interaction, desktop automation, data analysis, visualization, Excel automation, and dataset question answering.
+## 🚀 Project Overview
 
-## 🚀 Features
+JARVIS A.I. is a Python-based personal AI voice assistant designed to perform useful desktop, web, information, and data-related tasks through voice commands and a professional graphical user interface.
 
-### 🎙️ Voice Assistant
-- Voice-based interaction
-- Text-to-speech responses
-- Wake word detection using "Hey Jarvis"
-- Voice command recognition
+The project was initially developed as a command-based voice assistant and later improved with a modern GUI and JARVIS v2 enhancements.
 
-### 💻 Desktop Automation
-- Open applications
-- Open websites
-- Open folders
-- Take screenshots
-- File and folder operations
-- Clipboard operations
-- Volume control
-- Window switching
-- Computer lock
-- Restart and shutdown commands
+## ✨ Features
 
-### 📊 Smart Dataset Analysis
-- Analyze datasets using Pandas
-- Display rows and columns
-- Display column names
-- Display data types
-- Detect missing values
-- Detect duplicate rows
+### 🎤 Voice Interaction
 
-### 🧹 Data Cleaning
-- Remove duplicate rows
-- Handle missing values
-- Save cleaned datasets
+* Voice command recognition
+* Text-to-speech responses
+* Wake-word detection
+* Hands-free interaction with JARVIS
 
-### 📈 Data Visualization
-- Bar charts
-- Pie charts
-- Line charts
-- Histograms
+### 🌐 Web and General Commands
 
-### 📑 Excel Automation
-- Create Excel files
-- Read Excel files
-- Export reports to Excel
+* Open YouTube
+* Open Google
+* Open websites
+* Search the web
+* Get the current time
+* Answer general information queries
+* Wikipedia-based information search
 
-### 🤖 AI Dataset Q&A
-JARVIS can answer questions about the current dataset, including:
-- Number of records
-- Average values
-- Maximum values
-- Minimum values
-- Available courses
-- Basic dataset information
+### 🤖 Smart Command Processing
+
+* Intent recognition
+* Improved command understanding
+* Command routing and processing
+* Structured handling of user requests
+
+### 📊 Data Analysis Features
+
+* Data-related commands
+* Dataset interaction and question answering
+* Excel automation support
+* Data analysis functionality
+
+### 🖥️ Professional GUI
+
+* Modern desktop interface built using Tkinter
+* Visual interaction with the JARVIS assistant
+* Command and response display
+* GUI integration with the voice assistant
+* Improved user experience
 
 ## 🛠️ Technologies Used
 
-- Python
-- Pandas
-- Matplotlib
-- SpeechRecognition
-- pyttsx3
-- OpenWakeWord
-- PyAutoGUI
-- Pyperclip
-- Psutil
-- OpenPyXL
+* Python
+* Tkinter
+* SpeechRecognition
+* pyttsx3
+* OpenWakeWord
+* ONNX
+* Wikipedia API
+* PyWhatKit
+* psutil
+* SoundDevice
+* NumPy
 
 ## 📁 Project Structure
 
 ```text
-JARVIS A.I/
+JARVIS A.I.
 │
-├── main.py
-├── commands.py
-├── data_analysis.py
-├── voice.py
-├── wake_word.py
-├── utils.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-│
-└── screenshots/
-    ├── 01_wake_jarvis.png
-    ├── 02_dataset_analysis.png
-    ├── 03_data_cleaning.png
-    ├── 04_visualization.png
-    ├── 05_excel_automation.png
-    └── 06_dataset_qa.png
+├── main.py           # Main application and JARVIS logic
+├── jarvis_gui.py     # Professional graphical user interface
+├── gui_bridge.py     # Connection between JARVIS engine and GUI
+├── voice.py          # Voice recognition and text-to-speech functionality
+├── wake_word.py      # Wake-word detection
+├── commands.py       # Command handling
+├── intent.py         # Intent recognition and command understanding
+├── data_analysis.py  # Data analysis functionality
+├── utils.py          # Utility functions
+├── config.py         # Project configuration
+├── requirements.txt  # Required Python packages
+├── screenshots/      # Project screenshots
+└── README.md         # Project documentation
+```
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone <your-repository-url>
+```
+
+Move into the project folder:
+
+```bash
+cd "JARVIS A.I"
+```
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+For Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+## ▶️ Running JARVIS
+
+Run the main application:
+
+```bash
+python main.py
+```
+
+The JARVIS GUI will launch and the assistant can process supported voice and command interactions.
+
+## 🧠 Example Commands
+
+Try commands such as:
+
+* “Hello JARVIS”
+* “Open YouTube”
+* “Open Google”
+* “What is the time?”
+* “Search for Python tutorials”
+* “Who is Albert Einstein?”
+* Data analysis and dataset-related commands
+
+## 📈 Project Development
+
+### Version 1
+
+The initial version focused on:
+
+* Basic voice recognition
+* Text-to-speech
+* Opening websites
+* Web searches
+* Wikipedia information
+* Basic command processing
+
+### Version 2
+
+The project was enhanced with:
+
+* Professional GUI
+* Improved application architecture
+* GUI bridge integration
+* Intent recognition
+* Improved command processing
+* Wake-word functionality
+* Expanded data analysis capabilities
+* Better user interaction
+
+## 🎯 Future Improvements
+
+Planned improvements include:
+
+* Better voice recognition accuracy
+* Faster response time
+* More intelligent AI-powered responses
+* Improved wake-word detection
+* More Data Analyst features
+* Advanced Excel automation
+* More dataset questions and analysis capabilities
+* Additional commands
+* Further GUI improvements
+
+## 👨‍💻 Author
+
+**Basaveshwar Kotloru**
+
+Python Developer | Aspiring Data Analyst
+
+---
+
+⭐ If you found this project interesting, feel free to star the repository!
